@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        tools:context=".AddRecipeActivity">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:id="@+id/foodimage"
+            android:src="@mipmap/ic_addimage"
+            android:layout_centerHorizontal="true"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/foodimage"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/relativecard">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativefoodname"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Food Name : "
+                        android:id="@+id/txtfoodname"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold|italic"/>
+
+                    <EditText
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ed_name"
+                        android:background="@drawable/edittxt"
+                        android:padding="10dp"
+                        android:drawableRight="@drawable/ic_foodname"
+                        android:layout_toRightOf="@+id/txtfoodname"
+                        android:inputType="text"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativefooddesc"
+                    android:layout_below="@id/relativefoodname"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description : "
+                        android:id="@+id/txtfooddesc"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold|italic"/>
+
+                    <EditText
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ed_fooddesc"
+                        android:background="@drawable/edittxt"
+                        android:minLines="2"
+                        android:maxLines="2"
+                        android:padding="10dp"
+                        android:drawableRight="@drawable/ic_description"
+                        android:layout_toRightOf="@+id/txtfooddesc"
+                        android:inputType="text"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativefoodingredients"
+                    android:layout_below="@id/relativefooddesc"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ingredients : "
+                        android:id="@+id/txtfoodingredients"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold|italic"/>
+
+                    <EditText
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ed_foodingredients"
+                        android:background="@drawable/edittxt"
+                        android:padding="10dp"
+                        android:minLines="5"
+                        android:maxLines="10"
+                        android:drawableRight="@drawable/ic_ingredients"
+                        android:layout_toRightOf="@+id/txtfoodingredients"
+                        android:inputType="text"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativefoodinstruction"
+                    android:layout_below="@id/relativefoodingredients"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Instruction : "
+                        android:id="@+id/txtfoodinstruc"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold|italic"/>
+
+                    <EditText
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ed_foodinstruc"
+                        android:background="@drawable/edittxt"
+                        android:padding="10dp"
+                        android:minLines="5"
+                        android:maxLines="10"
+                        android:drawableRight="@drawable/ic_instruction"
+                        android:layout_toRightOf="@+id/txtfoodinstruc"
+                        android:inputType="text"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativefoodtype"
+                    android:layout_below="@id/relativefoodinstruction"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category : "
+                        android:id="@+id/txtfoodtype"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold|italic"/>
+
+                    <Spinner
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spintype"
+                        android:background="@drawable/edittxt"
+                        android:padding="10dp"
+                        android:drawableRight="@drawable/ic_instruction"
+                        android:layout_toRightOf="@+id/txtfoodtype"
+                        android:inputType="text"/>
+
+                </RelativeLayout>
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/relativefoodtype"
+                    android:id="@+id/btnadd"
+                    android:text="Add Recipe"
+                    android:textColor="#ffff"
+                    android:textStyle="italic|bold"
+                    android:background="@drawable/btn_background"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</ScrollView>

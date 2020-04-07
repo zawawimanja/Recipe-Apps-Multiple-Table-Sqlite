@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">RecipeApp</string>
+
+    <string-array name="types">
+        <item>Choose Recipe</item>
+        <item>All Types</item>
+        <item>Food</item>
+        <item>Beverages</item>
+        <item>Deserts</item>
+    </string-array>
+
+    <string-array name="category">
+        <item>--Choose One--</item>
+        <item>Food</item>
+        <item>Beverages</item>
+        <item>Deserts</item>
+    </string-array>
+
+</resources>
