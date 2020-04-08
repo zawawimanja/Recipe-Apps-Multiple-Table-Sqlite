@@ -1,8 +1,11 @@
 package com.android.malaya.recipeapp.Adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.android.malaya.recipeapp.R;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -32,6 +35,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //we need to display image & title only
         sqLiteDatabase.execSQL(CREATE_TABLE);
+
+        ContentValues values = new ContentValues();
+        values.put("image_url", R.drawable.kakwok);
+        values.put("type","Food");
+        sqLiteDatabase.insert("category_details",null,values);
+
+
 
 
     }
