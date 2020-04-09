@@ -1,4 +1,4 @@
-package com.android.malaya.recipeapp;
+package com.android.malaya.recipeapp.recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,8 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.malaya.recipeapp.R;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.android.malaya.recipeapp.Adapter.DBHelper;
+import com.android.malaya.recipeapp.DBHelper.DBHelper;
 
 public class ViewRecipeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,11 +50,11 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
         btndelete = findViewById(R.id.btndelete);
         btnupdate.setOnClickListener(this);
         btndelete.setOnClickListener(this);
-        GetData();
+        getDataID();
     }
 
     //display the recipe detail
-    private void GetData(){
+    private void getDataID(){
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("Select * from recipe_details where id like "+id,null);
@@ -73,13 +74,15 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                startActivity(new Intent(ViewRecipeActivity.this,RecipesActivity.class));
+                Intent i = new Intent(ViewRecipeActivity.this,RecipesActivity.class);;
+                i.putExtra("Type",type);
+                startActivity(i);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private int DeleteRecord(){
+    private int deleteRecord(){
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getWritableDatabase();
         int affectedrow = db.delete("recipe_details","id = ?",new String[] {id});
@@ -100,7 +103,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                int checkstatus = DeleteRecord();
+                                int checkstatus = deleteRecord();
                                 if (checkstatus > 0) {
                                     Toast.makeText(ViewRecipeActivity.this,"Recipe deleted succesfully",Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(ViewRecipeActivity.this, RecipesActivity.class));
@@ -122,6 +125,10 @@ public class ViewRecipeActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent i = new Intent(ViewRecipeActivity.this,RecipesActivity.class);;
+        i.putExtra("Type",type);
+        startActivity(i);
+
     }
 
 }

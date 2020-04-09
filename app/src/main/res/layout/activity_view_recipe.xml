@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewRecipeActivity">
+    tools:context=".recipe.ViewRecipeActivity">
+
+
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -41,6 +44,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -168,36 +176,57 @@
 
                 </RelativeLayout>
 
+
             </androidx.cardview.widget.CardView>
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/instruct"
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/instruction"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="20dp">
+                app:cardCornerRadius="5dp">
 
-                <Button
-                    android:layout_width="100dp"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Update"
-                    android:background="@drawable/btn_background2"
-                    android:layout_marginRight="50dp"
-                    android:id="@+id/btnupdate">
-                </Button>
+                    android:padding="15dp">
+                    <Button
+                      android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Update"
+                        android:background="@drawable/btn_background2"
+                        android:layout_alignParentLeft="true"
+                        android:id="@+id/btnupdate">
+                    </Button>
 
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="Delete"
-                    android:background="@drawable/btn_background"
-                    android:textColor="#F00B0B"
-                    android:textStyle="bold"
-                    android:id="@+id/btndelete"
-                    android:layout_toRightOf="@+id/btnupdate">
-                </Button>
 
-            </RelativeLayout>
+
+
+                    <Button
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delete"
+                        android:background="@drawable/btn_background"
+                        android:textColor="#F00B0B"
+                        android:textStyle="bold"
+                        android:id="@+id/btndelete"
+                        android:layout_toRightOf="@+id/btnupdate">
+                    </Button>
+
+
+                </LinearLayout>
+
+
+
+
+            </androidx.cardview.widget.CardView>
+
 
         </RelativeLayout>
 

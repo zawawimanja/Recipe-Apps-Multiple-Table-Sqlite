@@ -4,7 +4,7 @@ package com.android.malaya.recipeapp.category;
 
 public class Category {
 
-    private String image_url,name,description,ingredients,instruction,type,id;
+    private String image_url,type,id;
 
     public String getId() {
         return id;
@@ -22,38 +22,6 @@ public class Category {
         this.image_url = image_url;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public String getInstruction() {
-        return instruction;
-    }
-
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
-    }
-
     public String getType() {
         return type;
     }
@@ -61,4 +29,7 @@ public class Category {
     public void setType(String type) {
         this.type = type;
     }
+
+
+
 }

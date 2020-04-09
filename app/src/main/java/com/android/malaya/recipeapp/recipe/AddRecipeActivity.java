@@ -1,4 +1,4 @@
-package com.android.malaya.recipeapp;
+package com.android.malaya.recipeapp.recipe;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.malaya.recipeapp.R;
+import com.android.malaya.recipeapp.category.AddCategoryActivity;
 import com.bumptech.glide.Glide;
-import com.android.malaya.recipeapp.Adapter.DBHelper;
+import com.android.malaya.recipeapp.DBHelper.DBHelper;
 
 public class AddRecipeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -28,6 +30,7 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
     private Button btnadd;
     private String name,desc,ingredients,instruction,imagecheck,type,image;
     private Spinner spintype;
+    Uri path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
         btnadd.setOnClickListener(this);
     }
 
-    private void SelectImage(){
+    private void selectImage(){
         Intent i = new Intent();
         i.setAction(Intent.ACTION_OPEN_DOCUMENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -61,14 +64,16 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null){
-            Uri path = data.getData();
+            path = data.getData();
             Glide.with(this).load(path).into(foodimage);
             image = path.toString();
+
+
         }
         super.onActivityResult(requestCode,resultCode,data);
     }
 
-    private void AddIntoDB(){
+    private void addIntoDB(){
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -84,7 +89,10 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
         }
         else {
             Toast.makeText(AddRecipeActivity.this,"New Recipe added succesfully",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(AddRecipeActivity.this,RecipesActivity.class));
+            Intent i = new Intent(AddRecipeActivity.this, RecipesActivity.class);
+            //go to recipe activity and  pass display type of food
+            i.putExtra("Type",type);
+            startActivity(i);
         }
     }
 
@@ -102,7 +110,7 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.foodimage:
-                SelectImage();
+                selectImage();
                 imagecheck = "Yes";
                 break;
             case R.id.btnadd:
@@ -110,12 +118,18 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
                 desc = eddesc.getText().toString().trim();
                 ingredients = edingredients.getText().toString().trim();
                 instruction = edinstruction.getText().toString().trim();
-                if (name.equals("")||desc.equals("")||ingredients.equals("")||instruction.equals("")||imagecheck.equals("")||type.equals("--Please Choose--")){
+                if (name.equals("")||desc.equals("")||ingredients.equals("")||instruction.equals("")||type.equals("--Choose One--") ||imagecheck==""||path==null){
                     Toast.makeText(AddRecipeActivity.this,"Please fill in all the information",Toast.LENGTH_LONG).show();
+
+
                 }
                 else {
-                    AddIntoDB();
+                    Glide.with(this).load(path).into(foodimage);
+                    image = path.toString();
+                    addIntoDB();
                 }
+
+
                 break;
         }
     }

@@ -1,7 +1,10 @@
-package com.android.malaya.recipeapp.Adapter;
+package com.android.malaya.recipeapp.recipe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.android.malaya.recipeapp.R;
-import com.android.malaya.recipeapp.ViewRecipeActivity;
 
 import java.util.ArrayList;
 
@@ -22,10 +24,25 @@ public class RecyclerRecipeAdapter extends RecyclerView.Adapter<RecyclerRecipeAd
 
     private ArrayList<Recipe> recipes = new ArrayList<>();
     private Context context;
+    private final Drawable[] mRecipeImage;
+    int countImage=0;
+    private final String[] mPlaceDesc;
+    private final String[] mPlaces;
 
     public RecyclerRecipeAdapter(ArrayList<Recipe> recipes, Context context) {
         this.recipes = recipes;
         this.context = context;
+
+        Resources resources = context.getResources();
+        mPlaces = resources.getStringArray(R.array.places);
+        mPlaceDesc = resources.getStringArray(R.array.place_desc);
+        TypedArray a = resources.obtainTypedArray(R.array.recipe_picture);
+        mRecipeImage= new Drawable[a.length()];
+        for (int i = 0; i < mRecipeImage.length; i++) {
+            mRecipeImage[i] = a.getDrawable(i);
+        }
+        a.recycle();
+
     }
 
     @NonNull
@@ -39,12 +56,33 @@ public class RecyclerRecipeAdapter extends RecyclerView.Adapter<RecyclerRecipeAd
     @Override
     public void onBindViewHolder(@NonNull RecipeHolder holder, int position) {
         final Recipe r = recipes.get(position);
-        holder.txtfoodname.setText(r.getName());
-        holder.txtfooddesc.setText(r.getDescription());
-        //get image uri
-        Uri image = Uri.parse(r.getImage_url());
-        //load image using glide
-        Glide.with(context).load(image).into(holder.civfood);
+
+
+        countImage++;
+
+        Uri   image = Uri.parse(r.getImage_url());
+
+        //shown demo when on first launch
+        //display 5 item
+        if(image==null){
+
+            // holder.civfood.setImageDrawable(mCategorImage[position % mCategorImage.length]);
+
+            Glide.with(context).load(mRecipeImage).into(holder.civfood);
+            holder.txtfooddesc.setText(mPlaceDesc[position % mPlaceDesc.length]);
+            holder.txtfoodname.setText(mPlaces[position % mPlaces.length]);
+
+        }else{
+            //get image uri
+            holder.txtfoodname.setText(r.getName());
+            holder.txtfooddesc.setText(r.getDescription());
+            //get image uri
+
+
+            //load image using glide
+            Glide.with(context).load(image).into(holder.civfood);
+
+        }
 
         //set click
         holder.itemView.setOnClickListener(new View.OnClickListener() {

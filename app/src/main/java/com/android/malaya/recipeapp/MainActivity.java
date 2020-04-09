@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
+import com.android.malaya.recipeapp.recipe.RecipesActivity;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(MainActivity.this,RecipesActivity.class));
+                startActivity(new Intent(MainActivity.this, RecipesActivity.class));
             }
         },TIMER);
     }

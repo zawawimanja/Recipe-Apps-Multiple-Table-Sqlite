@@ -1,4 +1,4 @@
-package com.android.malaya.recipeapp.Adapter;
+package com.android.malaya.recipeapp.recipe;
 
 public class Recipe {
 
