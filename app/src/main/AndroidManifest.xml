@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".category.AddCategoryActivity"></activity>
+        <activity android:name=".category.CategoryUpdateActivity" />
+        <activity android:name=".category.AddCategoryActivity" />
         <activity android:name=".category.CategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +25,10 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9046598316825555~6794051325" />
 
-        <activity android:name=".RecipeUpdateActivity" />
-        <activity android:name=".ViewRecipeActivity" />
-        <activity android:name=".AddRecipeActivity" />
-        <activity android:name=".RecipesActivity"></activity>
+        <activity android:name=".recipe.RecipeUpdateActivity" />
+        <activity android:name=".recipe.ViewRecipeActivity" />
+        <activity android:name=".recipe.AddRecipeActivity" />
+        <activity android:name=".recipe.RecipesActivity" />
         <activity android:name=".MainActivity" />
     </application>
 

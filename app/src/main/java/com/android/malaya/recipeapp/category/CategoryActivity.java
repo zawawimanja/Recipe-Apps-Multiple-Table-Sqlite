@@ -4,21 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.malaya.recipeapp.Adapter.DBHelper;
-import com.android.malaya.recipeapp.Adapter.Recipe;
-import com.android.malaya.recipeapp.Adapter.RecyclerRecipeAdapter;
-import com.android.malaya.recipeapp.AddRecipeActivity;
+import com.android.malaya.recipeapp.DBHelper.DBHelper;
 import com.android.malaya.recipeapp.R;
-import com.android.malaya.recipeapp.RecipesActivity;
+import com.android.malaya.recipeapp.recipe.AddRecipeActivity;
+import com.android.malaya.recipeapp.recipe.RecipesActivity;
+import com.android.malaya.recipeapp.recipe.ViewRecipeActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -27,14 +30,15 @@ public class CategoryActivity extends AppCompatActivity {
 
 
 
-    private Spinner spintype;
-    private FloatingActionButton fabadd;
+
+    private FloatingActionButton fabAdd;
     private RecyclerView recyclertype;
 
     private TextView txtrecipealert;
-    private ArrayList<Category> recipes = new ArrayList<>();
-    private CategoryAdapter rra;
-    private String id,name,type;
+    private ArrayList<Category> categoriesList = new ArrayList<>();
+    private CategoryAdapter adapter;
+    private String id,image,type;
+    public static final String TAG="CategoryActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +46,26 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
 
 
-        fabadd = findViewById(R.id.fabadd);
+        fabAdd = findViewById(R.id.fabadd);
         recyclertype = findViewById(R.id.recylertype);
         txtrecipealert = findViewById(R.id.txtrecipes);
 
         Bundle data = getIntent().getExtras();
         if (data != null){
             id = data.getString("ID");
-            name = data.getString("Name");
+            image = data.getString("Image");
             type = data.getString("Type");
         }
 
 
+        //display recyclerview
+        setUpRecycler();
 
-        SetUpRecycler();
-        GetRecipeAll();
+        //display all category
+        getCategoryAll();
 
-        fabadd.setOnClickListener(new View.OnClickListener() {
+        //add category
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CategoryActivity.this, AddCategoryActivity.class));
@@ -66,23 +73,26 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
 
+        // Notify the adapter of the change.
+        adapter.notifyDataSetChanged();
+
     }
 
-    //show all recipe
-    private void GetRecipeAll(){
-        recipes.clear();
+    //show all catgory
+    private void getCategoryAll(){
+        categoriesList.clear();
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM category_details",null);
         if (c.moveToFirst()){
             txtrecipealert.setVisibility(View.GONE);
             do {
-                Category recipe = new Category();
-                recipe.setId(c.getString(0));
-                recipe.setImage_url(c.getString(1));
-                recipe.setType(c.getString(2));
-                recipes.add(recipe);
-                rra.notifyDataSetChanged();
+                Category category= new Category();
+                category.setId(c.getString(0));
+                category.setImage_url(c.getString(1));
+                category.setType(c.getString(2));
+                categoriesList.add(category);
+                adapter.notifyDataSetChanged();
             }while (c.moveToNext());
         }
         else {
@@ -90,11 +100,91 @@ public class CategoryActivity extends AppCompatActivity {
         }
     }
 
-    private void SetUpRecycler(){
-        rra = new CategoryAdapter(recipes,this);
-        recyclertype.setAdapter(rra);
+
+    private void setUpRecycler(){
+        adapter = new CategoryAdapter(categoriesList,this);
+        recyclertype.setAdapter(  adapter);
         recyclertype.setLayoutManager(new LinearLayoutManager(this));
+
+        /**
+         * On long press on RecyclerView item, open alert dialog
+         * with options to choose
+         * Edit and Delete
+         * */
+        recyclertype.addOnItemTouchListener(new RecyclerTouchListener(this,
+                recyclertype, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, final int position) {
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                showActionsDialog(position);
+
+
+
+
+            }
+        }));
     }
+
+    /**
+     * Opens dialog with Edit - Delete options
+     * Edit - 0
+     * Delete - 0
+     */
+    private void showActionsDialog(final int position) {
+        CharSequence colors[] = new CharSequence[]{"Edit", "Delete"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose option");
+        builder.setItems(colors, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(CategoryActivity.this,Integer.toString(which),Toast.LENGTH_LONG);
+                if (which == 0) {
+                    //update
+                    final Category r = categoriesList.get(position);
+                    Intent i = new Intent(CategoryActivity.this, CategoryUpdateActivity.class);
+                    i.putExtra("ID",r.getId());
+                    i.putExtra("Type",r.getType());
+                    Log.i(TAG,"idAdapterCategoryActivity: "+r.getType());
+                    startActivity(i);
+
+                } else {
+                    deleteNote(position);
+
+                }
+            }
+        });
+        builder.show();
+    }
+
+
+
+
+    /**
+     * Deleting note from SQLite and removing the
+     * item from the list by its position
+     */
+    private void deleteNote(int position) {
+        // deleting the category from db
+        DBHelper helper = new DBHelper(this);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete("category_details", "id" + " = ?",
+                new String[]{String.valueOf(categoriesList.get(position).getId())});
+        db.close();
+
+        // removing the category from the list
+        categoriesList.remove(position);
+        adapter.notifyItemRemoved(position);
+
+
+    }
+
+
+
+
 
 
 

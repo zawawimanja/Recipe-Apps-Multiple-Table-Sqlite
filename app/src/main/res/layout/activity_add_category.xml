@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        tools:context=".AddRecipeActivity">
+        tools:context=".recipe.AddRecipeActivity">
 
         <ImageView
             android:layout_width="300dp"
@@ -71,7 +71,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_below="@+id/relativefoodtype"
                     android:id="@+id/btnadd"
-                    android:text="Add Recipe"
+                    android:text="Add Category"
                     android:textColor="#ffff"
                     android:textStyle="italic|bold"
                     android:background="@drawable/btn_background"/>

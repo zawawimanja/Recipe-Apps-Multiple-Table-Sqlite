@@ -1,4 +1,4 @@
-package com.android.malaya.recipeapp;
+package com.android.malaya.recipeapp.recipe;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +19,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.malaya.recipeapp.Adapter.DBHelper;
+import com.android.malaya.recipeapp.DBHelper.DBHelper;
+import com.android.malaya.recipeapp.R;
 
 public class RecipeUpdateActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private String id,name,desc,ingredients,instruction,type,imagecheck;
+    private String id,name,desc,ingredients,instruction,type,imageCheck;
     private EditText edname,eddesc,edingredients,edinstruction;
     private ImageView foodimage;
     private Spinner spintype;
@@ -49,16 +50,21 @@ public class RecipeUpdateActivity extends AppCompatActivity implements View.OnCl
         foodimage = findViewById(R.id.foodimage);
         btnupdate = findViewById(R.id.btnupdate);
         spintype = findViewById(R.id.spintype);
-        adapter = ArrayAdapter.createFromResource(this,R.array.category,android.R.layout.simple_spinner_item);
+
+//        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(this,
+//                android.R.layout.simple_spinner_item, R.array.category);
+       adapter = ArrayAdapter.createFromResource(this,R.array.category,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spintype.setAdapter(adapter);
         spintype.setOnItemSelectedListener(this);
-        GetData();
+
+
+        getDataID();
         foodimage.setOnClickListener(this);
         btnupdate.setOnClickListener(this);
     }
 
-    private void SelectImage(){
+    private void selectImage(){
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -74,7 +80,7 @@ public class RecipeUpdateActivity extends AppCompatActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private boolean UpdateData(){
+    private boolean updateData(){
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("image_url",path.toString());
@@ -87,7 +93,7 @@ public class RecipeUpdateActivity extends AppCompatActivity implements View.OnCl
         return true;
     }
 
-    private void GetData(){
+    private void getDataID(){
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("Select * from recipe_details where id like "+id,null);
         if (c.moveToFirst()){
@@ -122,12 +128,12 @@ public class RecipeUpdateActivity extends AppCompatActivity implements View.OnCl
                 desc = eddesc.getText().toString().trim();
                 ingredients = edingredients.getText().toString().trim();
                 instruction = edinstruction.getText().toString().trim();
-                if (name.equals("")||desc.equals("")||ingredients.equals("")||instruction.equals("")){
+                if (name.equals("")||desc.equals("")||ingredients.equals("")||instruction.equals("")  || (type.equals("--Choose One--") ||imageCheck=="")){
                     Toast.makeText(RecipeUpdateActivity.this,"Please fill in all the information",Toast.LENGTH_LONG).show();
                 }
                 else {
-                    UpdateData();
-                    if (UpdateData() == true){
+                    updateData();
+                    if (updateData() == true){
                         Toast.makeText(RecipeUpdateActivity.this,"Succesfully Updated",Toast.LENGTH_LONG).show();
                         Intent i = new Intent(RecipeUpdateActivity.this,ViewRecipeActivity.class);
                         i.putExtra("ID",id);
@@ -141,8 +147,8 @@ public class RecipeUpdateActivity extends AppCompatActivity implements View.OnCl
                 }
                 break;
             case R.id.foodimage:
-                SelectImage();
-                imagecheck = "Yes";
+                selectImage();
+                imageCheck = "Yes";
                 break;
         }
     }

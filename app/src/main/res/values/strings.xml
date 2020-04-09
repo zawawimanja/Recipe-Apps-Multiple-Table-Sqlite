@@ -4,16 +4,82 @@
     <string-array name="types">
         <item>Choose Recipe</item>
         <item>All Types</item>
-        <item>Food</item>
-        <item>Beverages</item>
-        <item>Deserts</item>
+        <item>Bread</item>
+        <item>Brownie</item>
+        <item>Cake</item>
+        <item>Pizza</item>
+        <item>Soup</item>
     </string-array>
 
     <string-array name="category">
         <item>--Choose One--</item>
-        <item>Food</item>
-        <item>Beverages</item>
-        <item>Deserts</item>
+        <item>Bread</item>
+        <item>Brownie</item>
+        <item>Cake</item>
+        <item>Pizza</item>
+        <item>Soup</item>
     </string-array>
+
+
+    <string name="msg_no_notes">No notes found!</string>
+    <string name="lbl_new_note_title">New Note</string>
+    <string name="lbl_edit_note_title">Edit Note</string>
+    <string name="hint_enter_note">Enter your note!</string>
+
+    <array name="category_picture">
+        <item>@drawable/bread_category</item>
+        <item>@drawable/brownie_category</item>
+        <item>@drawable/cake_category</item>
+        <item>@drawable/pizza_category</item>
+        <item>@drawable/soup_category</item>
+    </array>
+
+    <array name="recipe_picture">
+        <item>@drawable/recipebread</item>
+        <item>@drawable/recipebrownies</item>
+        <item>@drawable/recipecake</item>
+        <item>@drawable/recipepizza</item>
+        <item>@drawable/recipesoup</item>
+    </array>
+
+
+    <string-array name="categorydisplay">
+
+        <item>Bread</item>
+        <item>Brownie</item>
+        <item>Cake</item>
+        <item>Pizza</item>
+        <item>Soup</item>
+    </string-array>
+
+
+    <string-array name="places">
+
+        <item>Sun-dried tomato and olive bread </item>
+        <item>Fudgy chocolate brownies</item>
+        <item>Apple cakes</item>
+        <item>Quick pepperoni pizza</item>
+        <item>Chicken soup and dumplings</item>
+    </string-array>
+
+
+    <string-array name="place_desc">
+
+        <item>Sun-dried tomato and olive bread </item>
+
+        <item>A savoury salty Mediterranean sun-dried
+        tomato loaf that makes a great sandwich with peppery rocket and ham. </item>
+
+
+        <item> Mary Berrys ultimate apple cake – a Victoria sponge that stays really moist from grated apple. The lemon-flavoured cream keeps it fresh-tasting.</item>
+
+        <item>A quick and easy pizza with no proving required. Tailor the toppings to suit your taste.</item>
+
+        <item> Chicken soup is known as Jewish penicillin. Its the ultimate comfort food served with matzo dumplings.
+       </item>
+
+    </string-array>
+
+
 
 </resources>
